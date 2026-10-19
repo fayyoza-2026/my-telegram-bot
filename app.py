@@ -2,9 +2,9 @@ import os
 from flask import Flask, request
 import telebot
 
-TOKEN = "8838932242:AAHnmUseuhq0pg6lqleCbak4mdJ82iOOGM8_OLGAN_TOKENINGIZNI_YOZING"
+TOKEN = os.environ.get("BOT_TOKEN")
 bot = telebot.TeleBot(TOKEN)
-app = Flask(__name)
+app = Flask(__name__)
 
 @app.route(f"/{TOKEN}", methods=["POST"])
 def webhook():
