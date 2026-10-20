@@ -7,7 +7,7 @@ bot = telebot.TeleBot(TOKEN)
 app = Flask(__name__)
 
 
-@app.route(f'/{TOKEN}', methods=['POST'])
+@app.route('/8838932242:AAEyshHzRyH76uk5qEKfDC-dyG2dAGiVpBU', methods=['POST'])
 def webhook():
   if request.headers.get('content-type') == 'application/json':
     json_string = request.get_data().decode('utf-8')
