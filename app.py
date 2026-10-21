@@ -5,8 +5,8 @@ from google import genai
 TOKEN = '8838932242:AAEyshHzRyH76uk5qEKfDC-dyG2dAGiVpBU'
 bot = telebot.TeleBot(TOKEN)
 
-# Google Gemini AI Kaliti 
-GEMINI_API_KEY = "AQ.Ab8RN6LTHAQoNZJ_sJZ5qXKmCrHqbmqDDW6yIyKImHSf_k2zlw"
+# Google Gemini AI Kaliti
+GEMINI_API_KEY = "AQ.Ab8RN6LTHAqoNZJ_sJZ5qXKmCrHqbmqDDW6yIyKImHSf_k2zlw"
 client = genai.Client(api_key=GEMINI_API_KEY)
 
 # Kutubxona ma'lumotlari va AI ko'rsatmasi
