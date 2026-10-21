@@ -1,12 +1,12 @@
 import telebot
 from google import genai
 
-# Telegram Bot Token
-TOKEN = '8838932242:AAEyshHzRyH76uk5qEKfDC-dyG2dAGiVpBU'
+# Telegram Bot Token (Yangi olingan tokeningiz)
+TOKEN = '8838932242:AAGte1ChkjeJWgc_z5OX2XZ3jBbQ9JOUW1k'
 bot = telebot.TeleBot(TOKEN)
 
 # Google Gemini AI Kaliti
-GEMINI_API_KEY = "AQ.Ab8RN6LTHAqoNZJ_sJZ5qXKmCrHqbmqDDW6yIyKImHSf_k2zlw"
+GEMINI_API_KEY = "AQ.Ab8RN6LTHAQoNZJ_sJZ5qXKmCrHqbmqDDW6yIyKImHSf_k2zlw"
 client = genai.Client(api_key=GEMINI_API_KEY)
 
 # Kutubxona ma'lumotlari va AI ko'rsatmasi
@@ -34,7 +34,7 @@ def send_welcome(message):
 def handle_ai_messages(message):
     try:
         response = client.models.generate_content(
-            model="gemini-1.5-flash",
+            model="gemini-2.5-flash",
             contents=f"{SYSTEM_INSTRUCTION}\n\nFoydalanuvchi savoli: {message.text}"
         )
         bot.reply_to(message, response.text)
