@@ -34,7 +34,7 @@ def send_welcome(message):
 def handle_ai_messages(message):
     try:
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model="gemini-1.5-flash",
             contents=f"{SYSTEM_INSTRUCTION}\n\nFoydalanuvchi savoli: {message.text}"
         )
         bot.reply_to(message, response.text)
