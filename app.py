@@ -1,40 +1,45 @@
 import telebot
+from google import genai
 
+# Telegram Bot Token
 TOKEN = '8838932242:AAEyshHzRyH76uk5qEKfDC-dyG2dAGiVpBU'
 bot = telebot.TeleBot(TOKEN)
 
-# Start buyrug'i uchun
+# Google Gemini AI Kaliti 
+GEMINI_API_KEY = "AQ.Ab8RN6LTHAQoNZJ_sJZ5qXKmCrHqbmqDDW6yIyKImHSf_k2zlw"
+client = genai.Client(api_key=GEMINI_API_KEY)
+
+# Kutubxona ma'lumotlari va AI ko'rsatmasi
+SYSTEM_INSTRUCTION = """
+Siz Nishon tuman axborot-kutubxona markazining rasmiy aqlli sun'iy intellekt botisiz.
+Kutubxona haqida ma'lumotlar:
+- Manzil: Nishon tumani, Paxtakor MFY, Qora Niyoziy koʻchasi 1-uy.
+- Ish vaqti: Dushanbadan Shanbagacha, soat 09:00 dan 18:00 gacha. Yakshanba — dam olish kuni.
+- Fond: 43,000 dan ortiq kitoblar mavjud.
+- Qoidalar: Kitoblar a'zolarga 10 kun muddatga bepul beriladi. A'zo bo'lish uchun pasport yoki guvohnoma kifoya.
+
+Vazifangiz: Foydalanuvchilarning har qanday savollariga, kitoblar hamda adabiyot bo'yicha so'rovlariga xushmuomala hamda aniq javob berish.
+"""
+
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
     welcome_text = (
-        "Assalomu alaykum! Nishon tuman axborot-kutubxona markazining rasmiy botiga xush kelibsiz! 📚\n\n"
-        "Men sizga kutubxonamiz haqida ma'lumot berishim mumkin:\n"
-        "📍 Joylashuv va manzil\n"
-        "⏰ Ish vaqti\n"
-        "📖 Kitob olish va a'zolik qoidalari\n\n"
+        "Assalomu alaykum! Nishon tuman axborot-kutubxona markazining rasmiy AI botiga xush kelibsiz! 📚 AI\n\n"
+        "Men sizga kutubxonamiz, kitoblar hamda a'zolik qoidalari bo'yicha har qanday savolingizga sun'iy intellekt yordamida javob bera olaman.\n\n"
         "Savolingizni yozib yuboring!"
     )
     bot.reply_to(message, welcome_text)
 
-# Kutubxona haqidagi savollarga javob berish
 @bot.message_handler(func=lambda message: True)
-def handle_messages(message):
-    text = message.text.lower()
-    
-    if 'qayerda' in text or 'manzil' in text or 'joylashuv' in text:
-        bot.reply_to(message, "📍 Kutubxonamiz manzili: Nishon tumani, Paxtakor MFY, Qora Niyoziy koʻchasi 1-uy.")
-    
-    elif 'vaqt' in text or 'soat' in text or 'ochiq' in text or 'ish' in text:
-        bot.reply_to(message, "⏰ Ish vaqtimiz: Dushanbadan Shanbagacha, soat 09:00 dan 18:00 gacha. Yakshanba — dam olish kuni.")
-    
-    elif 'kitob' in text or 'olish' in text or 'muddati' in text:
-        bot.reply_to(message, "📖 Kutubxonamizda 43,000 dan ortiq kitoblar mavjud. Kitoblar kitobxonlarga 10 kun muddatga bepul beriladi.")
-    
-    elif 'a\'zolik' in text or 'a\'zo' in text or 'hujjat' in text:
-        bot.reply_to(message, "🪪 Kutubxonaga a'zo bo'lish uchun shaxsni tasdiqlovchi hujjat (pasport yoki guvohnoma) yetarli. A'zolik mutlaqo bepul!")
-    
-    else:
-        bot.reply_to(message, "Tushundim. Sizning savolingiz bo'yicha kutubxona xodimlarimiz tez orada siz bilan bog'lanishadi! Yoki manzil, ish vaqti, kitob olish haqida so'rashingiz mumkin.")
+def handle_ai_messages(message):
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=f"{SYSTEM_INSTRUCTION}\n\nFoydalanuvchi savoli: {message.text}"
+        )
+        bot.reply_to(message, response.text)
+    except Exception as e:
+        bot.reply_to(message, "Hozirda javob berishda biroz texnik uzilish bo'ldi. Qayta urinib ko'ring.")
 
 if __name__ == '__main__':
-    bot.infinity_polling()  
+    bot.infinity_polling()
