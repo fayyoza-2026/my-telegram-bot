@@ -2,7 +2,7 @@ import telebot
 from google import genai
 
 # Telegram Bot Token (Yangi olingan tokeningiz)
-TOKEN = '8838932242:AAGte1ChkjeJWgc_z5OX2XZ3jBbQ9JOUW1k'
+TOKEN= '8838932242:AAFEK2AE8xAloJ35J85koH8SLhl_HMaZBT8'
 bot = telebot.TeleBot(TOKEN)
 
 # Google Gemini AI Kaliti
