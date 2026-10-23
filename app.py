@@ -65,7 +65,7 @@ def handle_ai_messages(message):
         bot.reply_to(message, fallback_text, parse_mode="Markdown")
 
 if __name__ == '__main__':
-    # Veb-serverni alohida oqimda (thread) ishga tushiramiz
+    # Veb-serverni alohida oqimda ishga tushiramiz
     threading.Thread(target=run_flask).start()
     # Telegram botni polling qilish
     bot.infinity_polling()
