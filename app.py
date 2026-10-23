@@ -1,8 +1,8 @@
 import telebot
 from google import genai
 
-# Telegram Bot Token (Yangi olingan tokeningiz)
-TOKEN= '8838932242:AAFEK2AE8xAloJ35J85koH8SLhl_HMaZBT8'
+# Telegram Bot Token (Sizning yangi tokeningiz)
+TOKEN = '8838932242:AAFEK2AE8xAloJ35J85koH8SLhl_HMaZBT8'
 bot = telebot.TeleBot(TOKEN)
 
 # Google Gemini AI Kaliti
@@ -34,12 +34,14 @@ def send_welcome(message):
 def handle_ai_messages(message):
     try:
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model="gemini-1.5-flash",
             contents=f"{SYSTEM_INSTRUCTION}\n\nFoydalanuvchi savoli: {message.text}"
         )
         bot.reply_to(message, response.text)
     except Exception as e:
+        print(f"Xatolik yuz berdi: {e}")
         bot.reply_to(message, "Hozirda javob berishda biroz texnik uzilish bo'ldi. Qayta urinib ko'ring.")
 
 if __name__ == '__main__':
     bot.infinity_polling()
+  
